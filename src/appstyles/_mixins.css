@@ -1,0 +1,4 @@
+@mixin header-font($font) {
+  $font: unquote($font);
+  @import url('https://fonts.googleapis.com/css?family=#{$font})&display=swap');
+}
