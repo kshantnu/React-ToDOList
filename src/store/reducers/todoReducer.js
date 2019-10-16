@@ -26,7 +26,12 @@ const fetchTodos = (nextState,action) => {
     ...action.payload
   }
 };
-const editTodo = () => {};
+const editTodo = (nextState,action) => {
+  return {
+    ...nextState,
+    ...action.payload
+  }
+};
 const deleteTodo = () => {};
 
 const searchTodo = () => {};

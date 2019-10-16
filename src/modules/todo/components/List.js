@@ -6,12 +6,14 @@ import {TodoItem} from "../components";
 
 const TodoList = (props) => {
   const {inputObject} = useContext(RootContextProvider);
+  
   const {itemList} = props;
   
   return (
     <div>
        {itemList.map((item) => 
-          <TodoItem key={item.id} item={item} value={item.id === inputObject.id ? inputObject.text : item.text}/>
+          <TodoItem key={item.id} item={item} value={item.id === inputObject.id ? inputObject.value : item.text} 
+          showAddButton = {itemList.length === item.id ? true : false}/>
        )}
     </div>
 
