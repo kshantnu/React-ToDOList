@@ -1,0 +1,33 @@
+@import '../../../appstyles/mixins';
+@include todo-font('Satisfy');
+
+.itemContainer {
+  width: 100%;
+
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+
+  .input {
+    padding: 0.5rem;
+    padding-bottom: 0rem;
+    width: 69%;
+    border: 0;
+    border-bottom-color: 2px solid palegreen;
+    border-bottom: 2px solid darkgreen;
+    background-color: transparent;
+    outline: 0;
+    margin-right: 2%;
+    font : {
+      size: 1.8rem;
+      family: 'Satisfy', cursive;
+    }
+  }
+  .imageContainer {
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}

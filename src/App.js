@@ -1,8 +1,14 @@
 import React from 'react';
+
+import { Provider } from "react-redux";
+import  store  from "./store/config/createStore";
+import RouteConfig from './routes/RouteConfig';
+
 import './appstyles/App.scss';
 
 function App() {
   return (
+   
     <div className="App">
       <header className="header">
         <div className="title">
@@ -10,9 +16,13 @@ function App() {
         </div>
       </header>
       <section className="main">
-        <div>jdgcjadsj</div>
+        
+      <Provider store={store}>
+        <RouteConfig/>
+      </Provider>
       </section>
     </div>
+   
   );
 }
 
