@@ -29,17 +29,20 @@ export const TodoContainer = (props) => {
   // generateNewColor();
   
   const dispatch = useDispatch();
-  
+  const store = useStore();
+
+  const [inputObject, updateText] = useState({id: null, value: ''})
   
     
  
   const data = useServiceHelper([]);
   const {isDataLoaded,todos} = data;
   
-  const store = useStore();
+  
   
 
   const onInputChange = (e,key) => {
+    updateText({id: key, value: e.target.value});
    // todos[key-1].text = e.target.value;
    // dispatch({type : 'ADD_TODO', payload: data});
    // updateTodos(todos);
@@ -68,7 +71,7 @@ export const TodoContainer = (props) => {
   }
   
   return (
-    <RootContextProvider.Provider value = {[dispatch,onInputChange]}>         
+    <RootContextProvider.Provider value = {{dispatch,onInputChange,inputObject}}>         
           <div className={styles.container}>
             {/* <div style={{backgroundColor: color}}>sdkfnvkdsv</div> */}
             <TodoHeader/>
