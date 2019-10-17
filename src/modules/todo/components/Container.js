@@ -1,7 +1,7 @@
-import React,{useEffect, useState, useReducer} from 'react';
-// import {useDispatch, useStore} from 'react-redux';
+import React,{useEffect, useState} from 'react';
+import {useDispatch, useStore, useSelector} from 'react-redux';
 import {TodoHeader, TodoItem, TodoList} from "../components";
-import {todoReducer} from "../../../store/reducers";
+
 import useServiceHelper from "../../../common/useServiceHelper";
 import styles from '../styles/container.module.scss';
 
@@ -11,15 +11,17 @@ import styles from '../styles/container.module.scss';
 export const RootContextProvider = React.createContext(null);
 
 export const TodoContainer = (props) => {
+  const dispatch = useDispatch();
+  const isDataLoaded = useSelector((state) => state.todoReducer.isDataLoaded);
+  const todos = useSelector((state) => state.todoReducer.todos);
+  const store = useStore();
 
-  //IMP : not using react-redux for now, state is maintained centerally by using react hooks;
-  // const dispatch = useDispatch();
-  // const store = useStore();
-
-  // TODO: Maintain a seperate class for initial state.. here reading it from todoReducer()
-  const [state, dispatch] = useReducer(todoReducer, todoReducer());
   const [inputObject, updateText] = useState({id: null, text: ''});
+
   const data = useServiceHelper([]);
+  useEffect(() => {
+    dispatch({type : 'ADD_TODO', payload: data});
+  },[data.isDataLoaded, data.todos]);
 
   const onInputChange = (e,key) => {
     updateText({id: key, text: e.target.value});
@@ -27,7 +29,7 @@ export const TodoContainer = (props) => {
 
   const saveTodoHandler = (id, changedText) => {
     // const localStorageTodos = JSON.parse(localStorage.getItem('todosList'));
-    const {todos} = state;
+    // const {todos} = state;
     
     // Improve array manipulation to not mutate original array
     const updatedTodos = todos.map((item) => 
@@ -40,7 +42,7 @@ export const TodoContainer = (props) => {
   }
 
   const deleteTodoHandler = (id) => {
-    const {todos} = state;
+    // const {todos} = state;
     const updatedTodos = todos.filter(item => item.id !== id);
     // data.todos = updatedTodos;
     dispatch({type : 'EDIT_TODO', payload: {todos: updatedTodos}});
@@ -54,7 +56,7 @@ export const TodoContainer = (props) => {
   }
 
   const addTodoHandler = (id) => {
-    const {todos} = state;
+    // const {todos} = state;
     console.log("todos state", todos);
     const newTodoObject = {id: id + 1, text: ''};
     todos.push(newTodoObject);
@@ -65,22 +67,20 @@ export const TodoContainer = (props) => {
   
   // Intialize local storage to show atleast one placeholder for todo
   useEffect(() => {
-    const {todos} = state;
-    if(todos.length === 0) {
-      todos.push({id: 1, text: ''});
-      localStorage.setItem('todosList',JSON.stringify(todos));
+    const locallyStoredTodos = JSON.parse(localStorage.getItem('todosList'))
+    if(!locallyStoredTodos || locallyStoredTodos.length === 0) {
+      const locallyStoredTodos = [];
+      locallyStoredTodos.push({id: 1, text: ''});
+      localStorage.setItem('todosList',JSON.stringify(locallyStoredTodos));
     }
   },[]);
   
-  useEffect(() => {
-    dispatch({type : 'ADD_TODO', payload: data});
-    // why is this executing on adding data as dependency ?? Need to investigate
-  },[data.isDataLoaded, data.todos]);
+  
 
   
   
   const renderToDoItem = () => {
-  const {isDataLoaded, todos} = state;
+  // const {isDataLoaded, todos} = state;
    let content = null;
    if(isDataLoaded) {
      if(todos && Array.isArray(todos)) {

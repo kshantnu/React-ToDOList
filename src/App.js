@@ -1,7 +1,7 @@
 import React from 'react';
 
-// import { Provider } from "react-redux";
-// import  store  from "./store/config/createStore";
+import { Provider } from "react-redux";
+import  store  from "./store/config/createStore";
 import RouteConfig from './routes/RouteConfig';
 
 import './appstyles/App.scss';
@@ -16,10 +16,10 @@ function App() {
         </div>
       </header>
       <section className="main">
-      <RouteConfig/>
-      {/* <Provider store={store}>
+      
+      <Provider store={store}>
         <RouteConfig/>
-      </Provider> */}
+      </Provider>
       </section>
     </div>
    
