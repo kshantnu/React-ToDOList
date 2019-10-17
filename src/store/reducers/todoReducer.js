@@ -10,8 +10,7 @@ import {
 
 const initialState = {
   todos: [],
-  isDataLoaded: false,
-  selectedTodo: null
+  isDataLoaded: false
 };
 
 const addTodo = (nextState, action) => {
@@ -27,17 +26,27 @@ const fetchTodos = (nextState,action) => {
   }
 };
 const editTodo = (nextState,action) => {
-  return {
+  const {payload: {todos}} = action;
+
+  if(todos && todos.length === 0) {
+    const obj = {id: 1, text: ''};
+    todos.push(obj);
+    localStorage.setItem('todosList',JSON.stringify(todos));
+  }
+
+   return  {
     ...nextState,
     ...action.payload
   }
+  
+
 };
 const deleteTodo = () => {};
 
 const searchTodo = () => {};
 const filterTodo = () => {};
 
-const todoReducer = (state, action) => {
+const todoReducer = (state, action = {type: 'default'}) => {
   const nextState = state || initialState;
   const { type } = action;
   switch (type) {

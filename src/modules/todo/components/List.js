@@ -11,9 +11,9 @@ const TodoList = (props) => {
   
   return (
     <div>
-       {itemList.map((item) => 
-          <TodoItem key={item.id} item={item} value={item.id === inputObject.id ? inputObject.value : item.text} 
-          showAddButton = {itemList.length === item.id ? true : false}/>
+       {itemList.map((item, index) => 
+          <TodoItem key={item.id} item={item} text={item.id === inputObject.id ? inputObject.text : item.text} 
+          showAddButton = {itemList.length === index + 1 ? true : false}/>
        )}
     </div>
 
